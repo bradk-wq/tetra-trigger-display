@@ -21,7 +21,7 @@ jobs:
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: cmake --build build -j -- -k0
+        run: cmake --build build -j
 
       - name: Check the examples were produced
         run: |
