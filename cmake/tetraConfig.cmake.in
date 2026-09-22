@@ -1,0 +1,17 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(PkgConfig)
+
+# tetra links these privately, but a static library still needs them at link
+# time, so the exported target references them by their imported names.
+if(NOT TARGET PkgConfig::LIBUSB)
+    pkg_check_modules(LIBUSB REQUIRED IMPORTED_TARGET libusb-1.0)
+endif()
+if(NOT TARGET PkgConfig::TURBOJPEG)
+    pkg_check_modules(TURBOJPEG REQUIRED IMPORTED_TARGET libturbojpeg>=3.0)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/tetraTargets.cmake")
+
+check_required_components(tetra)

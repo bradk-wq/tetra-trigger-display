@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: macos
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: brew install cmake pkg-config libusb jpeg-turbo sdl2
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j -- -k0
+
+      - name: Check the examples were produced
+        run: |
+          for binary in testcard gallery bounce sdl_mirror; do
+            test -x "build/$binary" || { echo "missing build/$binary"; exit 1; }
+          done
+
+      - name: Run what can run without hardware
+        run: |
+          ./build/testcard --help
+          ./build/gallery --help
+          ./build/bounce --help
