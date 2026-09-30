@@ -78,8 +78,8 @@ The pattern carries the frame number in binary across the top edge, so a
 
 - **Loss hurts a lot:** a frame needs every fragment. With 37 KB test frames
   (32 fragments) 3% packet loss lost about 60% of frames in the loopback test.
-  Real frames are nearer 20 KB, but expect to want FEC, smaller fragments
-  of a lower-quality stream, or a wired receiver link.
+  Real frames are nearer 20 KB, but expect to want forward error
+  correction, a lower JPEG quality, or a wired link to the receiver.
 - **No authentication or encryption.** Anyone who can reach the UDP port can
   show frames, and the receiver replies (acks, touch) to whichever address
   sent the last frame. Keep it on a trusted network; do not expose it.
